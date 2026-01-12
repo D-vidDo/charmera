@@ -45,8 +45,7 @@ export default function Home() {
   return (
     <>
       {/* PHOTO GRID */}
-      <div className="flex justify-center">
-        <div className="w-full max-w-6xl">
+      
           <div className="p-2 columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-3">
             {photos.map((photo) => (
               <img
@@ -69,8 +68,7 @@ export default function Home() {
               />
             ))}
           </div>
-        </div>
-      </div>
+        
 
       {/* FULLSCREEN MODAL */}
       {activePhoto && (

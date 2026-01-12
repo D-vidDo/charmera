@@ -1,13 +1,14 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Header from "./components/Header"
-import Home from "./pages/Home"
-import Upload from "./pages/Upload"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Upload from "./pages/Upload";
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex justify-center bg-white">
-        <div className="w-full max-w-6xl px-4">
+      <div className="min-h-screen bg-white">
+        {/* SINGLE CENTERED CONTAINER */}
+        <div className="max-w-6xl mx-auto px-4">
           <Header />
 
           <Routes>
@@ -17,7 +18,7 @@ function App() {
         </div>
       </div>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
