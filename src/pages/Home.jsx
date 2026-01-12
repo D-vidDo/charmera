@@ -5,7 +5,6 @@ import PhotoCard from "../components/PhotoCard";
 export default function Home() {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activePhoto, setActivePhoto] = useState(null);
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -17,8 +16,7 @@ export default function Home() {
 
         const urls = data.map((file) => ({
           name: file.name,
-          url: supabase.storage.from("photos").getPublicUrl(file.name).data
-            .publicUrl,
+          url: supabase.storage.from("photos").getPublicUrl(file.name).data.publicUrl,
           uploadedBy: file.metadata?.uploadedBy || "Anonymous",
         }));
 
@@ -34,46 +32,18 @@ export default function Home() {
   }, []);
 
   if (loading) return <p className="text-center mt-10">Loading photos...</p>;
-  if (!photos.length)
-    return <p className="text-center mt-10">No photos yet. Upload one!</p>;
+  if (!photos.length) return <p className="text-center mt-10">No photos yet. Upload one!</p>;
 
   return (
-    <>
-      <div className="flex justify-center py-6">
-        <div className="w-full max-w-6xl px-2">
-          {/* GRID CONTAINER */}
-          <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
-            {photos.map((photo) => (
-              <PhotoCard
-                key={photo.name}
-                photo={photo}
-                onClick={setActivePhoto}
-              />
-            ))}
-          </div>
+    <div className="flex justify-center py-6">
+      <div className="w-full max-w-6xl px-2">
+        {/* Masonry-style container */}
+        <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
+          {photos.map((photo) => (
+            <PhotoCard key={photo.name} photo={photo} />
+          ))}
         </div>
       </div>
-
-      {/* FULLSCREEN MODAL */}
-      {activePhoto && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center cursor-zoom-out p-4"
-          onClick={() => setActivePhoto(null)}
-        >
-          <div className="relative max-w-full max-h-full">
-            <img
-              src={activePhoto.url}
-              alt={activePhoto.name}
-              className="max-w-full max-h-full object-contain rounded"
-            />
-            {activePhoto.uploadedBy && (
-              <p className="text-white text-center mt-2">
-                {activePhoto.uploadedBy}
-              </p>
-            )}
-          </div>
-        </div>
-      )}
-    </>
+    </div>
   );
 }

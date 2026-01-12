@@ -1,4 +1,3 @@
-// src/components/PhotoCard.jsx
 import React from "react";
 import { Dialog, DialogTrigger, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -12,8 +11,8 @@ export default function PhotoCard({ photo }) {
           <img
             src={photo.url}
             alt={photo.name}
-            className="w-full object-cover transition-transform duration-300 group-hover:scale-105 rounded-md"
-            style={{ maxHeight: "300px" }}
+            className="w-full max-w-full transition-transform duration-300 group-hover:scale-105 rounded-md"
+            style={{ maxHeight: "300px", objectFit: "contain" }}
           />
         </div>
       </DialogTrigger>
