@@ -14,7 +14,7 @@ export default function Header() {
               variant="ghost"
               className="font-serif border-black text-black hover:bg-black hover:text-white"
             >
-              Home
+              home
             </Button>
           </Link>
 
@@ -23,7 +23,7 @@ export default function Header() {
               variant="ghost"
               className="font-serif border-black text-black hover:bg-black hover:text-white"
             >
-              Upload
+              upload
             </Button>
           </Link>
         </div>

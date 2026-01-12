@@ -37,7 +37,7 @@ useEffect(() => {
 
   if (loading) return <p className="text-center mt-10">Loading photos...</p>;
   if (!photos.length)
-    return <p className="text-center mt-10">No photos yet. Upload one!</p>;
+    return <p className="text-center mt-10">no charms yet. send one!</p>;
 
   return (
     <div className="flex flex-wrap justify-center gap-4 py-6">
