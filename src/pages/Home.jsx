@@ -42,23 +42,13 @@ export default function Home() {
       <div className="flex justify-center py-6">
         <div className="w-full max-w-6xl px-2">
           {/* GRID CONTAINER */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
             {photos.map((photo) => (
-              <div
+              <PhotoCard
                 key={photo.name}
-                className="overflow-hidden rounded-md cursor-zoom-in"
-                onClick={() => setActivePhoto(photo)}
-              >
-                {/* IMAGE */}
-                <img
-                  src={photo.url}
-                  alt={photo.name}
-                  className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
-                  style={{ maxHeight: "300px" }}
-                />
-
-                
-              </div>
+                photo={photo}
+                onClick={setActivePhoto}
+              />
             ))}
           </div>
         </div>
