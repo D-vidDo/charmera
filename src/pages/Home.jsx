@@ -15,7 +15,7 @@ useEffect(() => {
       if (error) throw error;
 
       // FILTER OUT THE PLACEHOLDER
-      const realFiles = data.filter(file => file.name !== 'emptyFolderPlaceholder');
+      const realFiles = data.filter(file => file.name !== '.emptyFolderPlaceholder');
 
       const urls = realFiles.map((file) => ({
         name: file.name,
