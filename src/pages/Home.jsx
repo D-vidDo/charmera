@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../supabase";
+import PhotoCard from "../components/PhotoCard";
 
 export default function Home() {
   const [photos, setPhotos] = useState([]);
@@ -18,11 +19,12 @@ export default function Home() {
           name: file.name,
           url: supabase.storage.from("photos").getPublicUrl(file.name).data
             .publicUrl,
+          uploadedBy: file.metadata?.uploadedBy || "Anonymous",
         }));
 
         setPhotos(urls);
       } catch (err) {
-        console.error("Error fetching photos:", err.message);
+        console.error(err.message);
       } finally {
         setLoading(false);
       }
@@ -37,32 +39,35 @@ export default function Home() {
 
   return (
     <>
-      {/* Photo grid wrapper */}
       <div className="flex justify-center py-6">
         <div className="mx-auto max-w-[1600px] columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
           {photos.map((photo) => (
-            <img
+            <PhotoCard
               key={photo.name}
-              src={photo.url}
-              alt={photo.name}
-              onClick={() => setActivePhoto(photo.url)}
-              className="mb-4 w-full rounded-md cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
-              style={{ maxHeight: "300px" }}
+              photo={photo}
+              onClick={setActivePhoto} // modal handler
             />
           ))}
         </div>
       </div>
 
-       {/* POPUP MODAL */}
+      {/* Modal */}
       {activePhoto && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
           onClick={() => setActivePhoto(null)}
         >
           <div
-            className="bg-white rounded-lg overflow-hidden shadow-xl max-w-lg w-full p-4"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+            className="relative bg-white rounded-lg shadow-lg max-w-lg w-[90%] p-4"
+            onClick={(e) => e.stopPropagation()}
           >
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-900"
+              onClick={() => setActivePhoto(null)}
+            >
+              ✕
+            </button>
+
             <img
               src={activePhoto.url}
               alt="Expanded"
@@ -71,12 +76,6 @@ export default function Home() {
             <p className="text-gray-700 text-sm">
               Uploaded by: {activePhoto.uploadedBy}
             </p>
-            <button
-              className="mt-4 w-full py-2 bg-gray-200 hover:bg-gray-300 rounded-md"
-              onClick={() => setActivePhoto(null)}
-            >
-              Close
-            </button>
           </div>
         </div>
       )}
