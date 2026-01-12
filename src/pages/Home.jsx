@@ -1,57 +1,58 @@
-// src/pages/Home.jsx
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { supabase } from '../supabase'
-import PhotoCard from '../components/PhotoCard'
-import UploadForm from '../components/UploadForm'
 
 export default function Home() {
   const [photos, setPhotos] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  // Fetch photos from storage bucket
+  const fetchPhotos = async () => {
+    try {
+      // List all files in the 'photos' bucket
+      const { data, error } = await supabase.storage
+        .from('photos')
+        .list('', { sortBy: { column: 'created_at', order: 'desc' } })
+
+      if (error) throw error
+
+      // Generate public URLs
+      const urls = data.map(file => {
+        return {
+          name: file.name,
+          url: supabase.storage.from('photos').getPublicUrl(file.name).data.publicUrl
+        }
+      })
+
+      setPhotos(urls)
+    } catch (err) {
+      console.error('Error fetching photos:', err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
     fetchPhotos()
-
-    // Realtime listener
-    const subscription = supabase
-      .from('photos')
-      .on('INSERT', payload => {
-        setPhotos(prev => [payload.new, ...prev])
-      })
-      .subscribe()
-
-    return () => supabase.removeSubscription(subscription)
   }, [])
 
-  async function fetchPhotos() {
-    const { data } = await supabase
-      .from('photos')
-      .select('*')
-      .order('created_at', { ascending: false })
-    setPhotos(data)
-  }
-
-  function handleNewPhoto(photo) {
-    setPhotos(prev => [photo, ...prev])
-  }
+  if (loading) return <p className="text-center mt-10">Loading photos...</p>
+  if (!photos.length)
+    return <p className="text-center mt-10">No photos yet. Upload one!</p>
 
   return (
-    <div className="p-4">
-      <UploadForm onUpload={handleNewPhoto} />
-
-      {/* Masonry grid */}
-      <div
-        className="
-          mt-4
-          columns-1 
-          sm:columns-2 
-          md:columns-3 
-          gap-4
-          [&>div]:break-inside-avoid
-        "
-      >
-        {photos.map(photo => (
-          <PhotoCard key={photo.id} photo={photo} />
-        ))}
-      </div>
+    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {photos.map((photo) => (
+        <div
+          key={photo.name}
+          className="w-full h-64 overflow-hidden rounded-lg shadow-md"
+        >
+          <img
+            src={photo.url}
+            alt={photo.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ))}
     </div>
   )
 }
