@@ -6,7 +6,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [activePhoto, setActivePhoto] = useState(null);
 
-  // Fetch photos from the bucket
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
@@ -15,15 +14,13 @@ export default function Home() {
           .list("", { sortBy: { column: "created_at", order: "desc" } });
         if (error) throw error;
 
-        // Fetch uploader info from your "photos" table if you have it
-        const photoUrls = data.map((file) => ({
+        const urls = data.map((file) => ({
           name: file.name,
           url: supabase.storage.from("photos").getPublicUrl(file.name).data
             .publicUrl,
-          uploadedBy: file.metadata?.uploadedBy || "Anonymous", // adjust based on how you store uploader info
         }));
 
-        setPhotos(photoUrls);
+        setPhotos(urls);
       } catch (err) {
         console.error("Error fetching photos:", err.message);
       } finally {
@@ -40,45 +37,33 @@ export default function Home() {
 
   return (
     <>
-      {/* PHOTO GRID */}
+      {/* Photo grid wrapper */}
       <div className="flex justify-center py-6">
         <div className="mx-auto max-w-[1600px] columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
           {photos.map((photo) => (
-            <div key={photo.name} className="mb-4 break-inside-avoid relative group">
-              <img
-                src={photo.url}
-                alt={photo.name}
-                onClick={() => setActivePhoto(photo)}
-                className="
-                  w-full
-                  rounded-md
-                  object-cover
-                  cursor-zoom-in
-                  transition-transform
-                  duration-300
-                  group-hover:scale-105
-                "
-                style={{ maxHeight: "300px" }}
-              />
-            </div>
+            <img
+              key={photo.name}
+              src={photo.url}
+              alt={photo.name}
+              onClick={() => setActivePhoto(photo.url)}
+              className="mb-4 w-full rounded-md cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+              style={{ maxHeight: "300px" }}
+            />
           ))}
         </div>
       </div>
 
-      {/* FULLSCREEN MODAL */}
+      {/* Fullscreen modal */}
       {activePhoto && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4 overflow-auto"
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center cursor-zoom-out"
           onClick={() => setActivePhoto(null)}
         >
           <img
-            src={activePhoto.url}
+            src={activePhoto}
             alt="Expanded"
-            className="max-w-full max-h-[80vh] object-contain mb-4"
+            className="max-w-full max-h-full object-contain"
           />
-          <p className="text-white text-sm">
-            Uploaded by: {activePhoto.uploadedBy}
-          </p>
         </div>
       )}
     </>
