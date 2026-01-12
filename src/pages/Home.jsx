@@ -4,6 +4,8 @@ import { supabase } from "../supabase";
 export default function Home() {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activePhoto, setActivePhoto] = useState(null);
+
 
   // Fetch photos from storage bucket
   const fetchPhotos = async () => {
