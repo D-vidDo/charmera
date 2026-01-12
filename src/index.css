@@ -29,3 +29,8 @@ html, body {
 .animate-fade-in {
   animation: fade-in 200ms ease-out;
 }
+
+/* src/index.css */
+.column-gap {
+  column-gap: 16px; /* horizontal spacing */
+}

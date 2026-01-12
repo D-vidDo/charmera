@@ -4,7 +4,7 @@ import React from "react";
 export default function PhotoCard({ photo, onClick }) {
   return (
     <div
-      className="mb-4 break-inside-avoid relative group"
+      className="mb-4 break-inside-avoid rounded-md overflow-hidden relative group"
       onClick={() => onClick(photo)}
     >
       <img
@@ -12,12 +12,12 @@ export default function PhotoCard({ photo, onClick }) {
         alt={photo.name}
         className="
           w-full
-          rounded-md
           object-cover
           cursor-zoom-in
           transition-transform
           duration-300
           group-hover:scale-105
+          rounded-md
         "
         style={{ maxHeight: "300px" }}
       />

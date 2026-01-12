@@ -40,16 +40,18 @@ export default function Home() {
   return (
     <>
       <div className="flex justify-center py-6">
-        <div className="mx-auto max-w-[1600px] columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
-          {photos.map((photo) => (
-            <PhotoCard
-              key={photo.name}
-              photo={photo}
-              onClick={setActivePhoto} // modal handler
-            />
-          ))}
-        </div>
-      </div>
+<div className="mx-auto max-w-[1600px] p-2 columns-2 sm:columns-3 md:columns-4 lg:columns-5 column-gap">
+    {photos.map((photo) => (
+      <PhotoCard
+        key={photo.name}
+        photo={photo}
+        onClick={setActivePhoto}
+      />
+    ))}
+  </div>
+</div>
+
+
 
       {/* Modal */}
       {activePhoto && (
