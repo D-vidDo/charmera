@@ -16,7 +16,8 @@ export default function Home() {
 
         const urls = data.map((file) => ({
           name: file.name,
-          url: supabase.storage.from("photos").getPublicUrl(file.name).data.publicUrl,
+          url: supabase.storage.from("photos").getPublicUrl(file.name).data
+            .publicUrl,
           uploadedBy: file.metadata?.uploadedBy || "Anonymous",
         }));
 
@@ -37,8 +38,8 @@ export default function Home() {
   return (
     <div className="flex justify-center py-6">
       <div className="w-full max-w-6xl px-2">
-        {/* Masonry-style container */}
-        <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
+        {/* Masonry container */}
+        <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 column-gap">
           {photos.map((photo) => (
             <PhotoCard key={photo.name} photo={photo} />
           ))}
