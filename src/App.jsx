@@ -6,12 +6,11 @@ import Upload from "./pages/Upload";
 function App() {
   return (
     <BrowserRouter>
-      {/* Outer flex container to center the inner max-width container */}
-      <div className="min-h-screen bg-white flex justify-center">
-        {/* Inner container limits width and adds horizontal padding */}
+      {/* Outer wrapper: flex column, centered */}
+      <div className="flex flex-col items-center min-h-screen w-full">
+        {/* Inner content: constrain width */}
         <div className="w-full max-w-6xl px-4">
           <Header />
-
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/upload" element={<Upload />} />

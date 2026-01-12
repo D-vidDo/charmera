@@ -37,21 +37,19 @@ export default function Home() {
 
   return (
     <>
-      {/* Centered photo grid wrapper */}
+      {/* Photo grid wrapper */}
       <div className="flex justify-center py-6">
-        <div className="w-full max-w-[1600px] px-4">
-          <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
-            {photos.map((photo) => (
-              <img
-                key={photo.name}
-                src={photo.url}
-                alt={photo.name}
-                onClick={() => setActivePhoto(photo.url)}
-                className="mb-4 w-full rounded-md cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
-                style={{ maxHeight: "300px" }}
-              />
-            ))}
-          </div>
+        <div className="mx-auto max-w-[1600px] columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
+          {photos.map((photo) => (
+            <img
+              key={photo.name}
+              src={photo.url}
+              alt={photo.name}
+              onClick={() => setActivePhoto(photo.url)}
+              className="mb-4 w-full rounded-md cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+              style={{ maxHeight: "300px" }}
+            />
+          ))}
         </div>
       </div>
 
