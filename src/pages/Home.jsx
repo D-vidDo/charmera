@@ -38,8 +38,7 @@ export default function Home() {
 
   return (
     <div className="flex justify-center py-6">
-      <div className="w-full max-w-6xl">
-        {/* Masonry container using CSS columns */}
+      <div className="w-full max-w-6xl px-2">
         <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
           {photos.map((photo) => (
             <PhotoCard key={photo.name} photo={photo} />

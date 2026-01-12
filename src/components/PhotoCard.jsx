@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogClose,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 export default function PhotoCard({ photo }) {
@@ -15,11 +10,11 @@ export default function PhotoCard({ photo }) {
           <img
             src={photo.url}
             alt={photo.name}
-            className="w-full rounded-md transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-auto rounded-md transition-transform duration-300 group-hover:scale-105"
             style={{
-              maxHeight: "300px", // max height for tall photos
-              width: "100%",
-              height: "auto", // preserve aspect ratio
+              maxWidth: "100%",       // never exceed column width
+              maxHeight: "300px",     // limit very tall photos
+              display: "block",       // avoid inline spacing issues
             }}
           />
         </div>
@@ -34,7 +29,6 @@ export default function PhotoCard({ photo }) {
         {photo.uploadedBy && (
           <p className="text-white mt-2">{photo.uploadedBy}</p>
         )}
-
         <DialogClose asChild>
           <Button className="absolute top-4 right-4 bg-white text-black rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-200">
             &times;
