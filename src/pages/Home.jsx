@@ -41,16 +41,21 @@ export default function Home() {
     return <p className="text-center mt-10">No photos yet. Upload one!</p>;
 
   return (
-    <div className="p-2 columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-2">
-      {photos.map((photo) => (
-        <img
-          key={photo.name}
-          src={photo.url}
-          alt={photo.name}
-          className="mb-2 w-full rounded-md object-cover break-inside"
-          style={{ height: "3rem" }} // tiny VSCO-style thumbnails
-        />
-      ))}
+    <div className="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+  {photos.map((photo) => (
+    <div
+      key={photo.name}
+      className="w-full overflow-hidden rounded-md"
+      style={{ height: '3rem' }} // forces the div to 1/5th height
+    >
+      <img
+        src={photo.url}
+        alt={photo.name}
+        className="w-full h-full object-cover"
+      />
     </div>
+  ))}
+</div>
+
   );
 }
