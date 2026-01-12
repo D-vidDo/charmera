@@ -10,11 +10,12 @@ export default function PhotoCard({ photo }) {
           <img
             src={photo.url}
             alt={photo.name}
-            className="w-full h-auto rounded-md transition-transform duration-300 group-hover:scale-105"
+            className="block rounded-md transition-transform duration-300 group-hover:scale-105"
             style={{
-              maxWidth: "100%",       // never exceed column width
-              maxHeight: "300px",     // limit very tall photos
-              display: "block",       // avoid inline spacing issues
+              width: "100%",        // scale down to column width
+              height: "auto",       // keep aspect ratio
+              maxHeight: "300px",   // constrain extremely tall images
+              objectFit: "cover",   // fill the column without stretching
             }}
           />
         </div>
