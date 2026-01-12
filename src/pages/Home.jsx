@@ -33,13 +33,14 @@ export default function Home() {
   }, []);
 
   if (loading) return <p className="text-center mt-10">Loading photos...</p>;
-  if (!photos.length) return <p className="text-center mt-10">No photos yet. Upload one!</p>;
+  if (!photos.length)
+    return <p className="text-center mt-10">No photos yet. Upload one!</p>;
 
   return (
     <div className="flex justify-center py-6">
-      <div className="w-full max-w-6xl px-2">
-        {/* Masonry container */}
-        <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 column-gap">
+      <div className="w-full max-w-6xl">
+        {/* Masonry container using CSS columns */}
+        <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
           {photos.map((photo) => (
             <PhotoCard key={photo.name} photo={photo} />
           ))}

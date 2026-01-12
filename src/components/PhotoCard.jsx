@@ -11,12 +11,12 @@ export default function PhotoCard({ photo }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="rounded-md overflow-hidden relative group cursor-zoom-in">
+        <div className="mb-4 break-inside-avoid rounded-md overflow-hidden relative group cursor-zoom-in">
           <img
             src={photo.url}
             alt={photo.name}
-            className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105 rounded-md"
-            style={{ maxHeight: "300px" }}
+            className="w-full rounded-md transition-transform duration-300 group-hover:scale-105"
+            style={{ height: "auto" }} // keep natural aspect ratio
           />
         </div>
       </DialogTrigger>
