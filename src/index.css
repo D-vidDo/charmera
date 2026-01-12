@@ -33,3 +33,11 @@ html, body {
 .column-gap {
   column-gap: 16px; /* horizontal spacing */
 }
+
+img {
+  width: auto;
+  max-width: 100%;   /* don't overflow column */
+  max-height: 300px; /* limit extreme height */
+  object-fit: contain;
+}
+
