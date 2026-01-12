@@ -6,30 +6,34 @@ export default function Home() {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchPhotos = async () => {
-      try {
-        const { data, error } = await supabase.storage
-          .from("photos")
-          .list("", { sortBy: { column: "created_at", order: "desc" } });
-        if (error) throw error;
+useEffect(() => {
+  const fetchPhotos = async () => {
+    try {
+      const { data, error } = await supabase.storage
+        .from("photos")
+        .list("", { sortBy: { column: "created_at", order: "desc" } });
+      if (error) throw error;
 
-        const urls = data.map((file) => ({
-          name: file.name,
-          url: supabase.storage.from("photos").getPublicUrl(file.name).data.publicUrl,
-          uploadedBy: file.metadata?.uploadedBy || "Anonymous",
-        }));
+      // FILTER OUT THE PLACEHOLDER
+      const realFiles = data.filter(file => file.name !== 'emptyFolderPlaceholder');
 
-        setPhotos(urls);
-      } catch (err) {
-        console.error(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+      const urls = realFiles.map((file) => ({
+        name: file.name,
+        url: supabase.storage.from("photos").getPublicUrl(file.name).data.publicUrl,
+        uploadedBy: file.metadata?.uploadedBy || "Anonymous",
+      }));
 
-    fetchPhotos();
-  }, []);
+      setPhotos(urls);
+    } catch (err) {
+      console.error(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchPhotos();
+}, []);
+
 
   if (loading) return <p className="text-center mt-10">Loading photos...</p>;
   if (!photos.length)
