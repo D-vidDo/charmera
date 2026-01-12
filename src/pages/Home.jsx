@@ -41,51 +41,51 @@ export default function Home() {
     <>
       <div className="flex justify-center py-6">
         <div className="w-full max-w-6xl px-2">
+          {/* GRID CONTAINER */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {photos.map((photo) => (
               <div
                 key={photo.name}
-                className="cursor-zoom-in overflow-hidden rounded-md"
+                className="overflow-hidden rounded-md cursor-zoom-in"
                 onClick={() => setActivePhoto(photo)}
               >
+                {/* IMAGE */}
                 <img
                   src={photo.url}
                   alt={photo.name}
                   className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
                   style={{ maxHeight: "300px" }}
                 />
-                <p className="text-sm text-gray-500 mt-1">{photo.uploadedBy}</p>
+
+                {/* UPLOADER NAME */}
+                {photo.uploadedBy && (
+                  <p className="text-sm text-gray-500 mt-1">
+                    {photo.uploadedBy}
+                  </p>
+                )}
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Modal */}
+      {/* FULLSCREEN MODAL */}
       {activePhoto && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center cursor-zoom-out p-4"
           onClick={() => setActivePhoto(null)}
         >
-          <div
-            className="relative bg-white rounded-lg shadow-lg max-w-lg w-[90%] p-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-900"
-              onClick={() => setActivePhoto(null)}
-            >
-              ✕
-            </button>
-
+          <div className="relative max-w-full max-h-full">
             <img
               src={activePhoto.url}
-              alt="Expanded"
-              className="w-full h-auto rounded-md mb-2"
+              alt={activePhoto.name}
+              className="max-w-full max-h-full object-contain rounded"
             />
-            <p className="text-gray-700 text-sm">
-              Uploaded by: {activePhoto.uploadedBy}
-            </p>
+            {activePhoto.uploadedBy && (
+              <p className="text-white text-center mt-2">
+                {activePhoto.uploadedBy}
+              </p>
+            )}
           </div>
         </div>
       )}
