@@ -1,5 +1,10 @@
 import React from "react";
-import { Dialog, DialogTrigger, DialogContent, DialogClose } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 export default function PhotoCard({ photo }) {
@@ -12,10 +17,10 @@ export default function PhotoCard({ photo }) {
             alt={photo.name}
             className="block rounded-md transition-transform duration-300 group-hover:scale-105"
             style={{
-              width: "100%",        // scale down to column width
-              height: "auto",       // keep aspect ratio
-              maxHeight: "300px",   // constrain extremely tall images
-              objectFit: "cover",   // fill the column without stretching
+              width: "100%", // fill column width
+              height: "auto", // keep aspect ratio
+              maxHeight: "300px", // optional: limit extreme tall images
+              objectFit: "contain", // <-- prevents cropping
             }}
           />
         </div>
