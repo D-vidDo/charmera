@@ -25,8 +25,15 @@ export default function UploadForm({ onUpload }) {
 
       if (uploadError) throw uploadError
 
-      // Get public URL
-      const { publicUrl } = supabase.storage.from('photos').getPublicUrl(fileName)
+      // Get public URL correctly
+      const { data: urlData, error: urlError } = supabase.storage
+        .from('photos')
+        .getPublicUrl(fileName)
+
+      if (urlError) throw urlError
+
+      const publicUrl = urlData.publicUrl
+      if (!publicUrl) throw new Error('Failed to get public URL')
 
       // Save metadata in table
       const { data, error: insertError } = await supabase
@@ -80,10 +87,10 @@ export default function UploadForm({ onUpload }) {
         disabled={uploading}
         className="border border-black text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors"
       >
-        {uploading ? 'Uploading...' : 'Upload'}
+        {uploading ? 'sending...' : 'send'}
       </button>
 
-      {/* Success Message */}
+      {/* Success / Error Message */}
       {successMessage && (
         <p className="text-black/80 text-sm mt-2">{successMessage}</p>
       )}
