@@ -57,12 +57,7 @@ export default function Home() {
                   style={{ maxHeight: "300px" }}
                 />
 
-                {/* UPLOADER NAME */}
-                {photo.uploadedBy && (
-                  <p className="text-sm text-gray-500 mt-1">
-                    {photo.uploadedBy}
-                  </p>
-                )}
+                
               </div>
             ))}
           </div>
