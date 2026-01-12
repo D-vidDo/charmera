@@ -16,7 +16,11 @@ export default function PhotoCard({ photo }) {
             src={photo.url}
             alt={photo.name}
             className="w-full rounded-md transition-transform duration-300 group-hover:scale-105"
-            style={{ height: "auto" }} // keep natural aspect ratio
+            style={{
+              maxHeight: "300px", // max height for tall photos
+              width: "100%",
+              height: "auto", // preserve aspect ratio
+            }}
           />
         </div>
       </DialogTrigger>
