@@ -53,17 +53,31 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Fullscreen modal */}
+       {/* POPUP MODAL */}
       {activePhoto && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center cursor-zoom-out"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
           onClick={() => setActivePhoto(null)}
         >
-          <img
-            src={activePhoto}
-            alt="Expanded"
-            className="max-w-full max-h-full object-contain"
-          />
+          <div
+            className="bg-white rounded-lg overflow-hidden shadow-xl max-w-lg w-full p-4"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+          >
+            <img
+              src={activePhoto.url}
+              alt="Expanded"
+              className="w-full h-auto rounded-md mb-2"
+            />
+            <p className="text-gray-700 text-sm">
+              Uploaded by: {activePhoto.uploadedBy}
+            </p>
+            <button
+              className="mt-4 w-full py-2 bg-gray-200 hover:bg-gray-300 rounded-md"
+              onClick={() => setActivePhoto(null)}
+            >
+              Close
+            </button>
+          </div>
         </div>
       )}
     </>
