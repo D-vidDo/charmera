@@ -1,3 +1,4 @@
+// src/pages/Home.jsx
 import React, { useEffect, useState } from "react";
 import { supabase } from "../supabase";
 
@@ -6,35 +7,28 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [activePhoto, setActivePhoto] = useState(null);
 
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      try {
+        const { data, error } = await supabase.storage
+          .from("photos")
+          .list("", { sortBy: { column: "created_at", order: "desc" } });
+        if (error) throw error;
 
-  // Fetch photos from storage bucket
-  const fetchPhotos = async () => {
-    try {
-      // List all files in the 'photos' bucket
-      const { data, error } = await supabase.storage
-        .from("photos")
-        .list("", { sortBy: { column: "created_at", order: "desc" } });
-
-      if (error) throw error;
-
-      // Generate public URLs
-      const urls = data.map((file) => {
-        return {
+        const urls = data.map((file) => ({
           name: file.name,
           url: supabase.storage.from("photos").getPublicUrl(file.name).data
             .publicUrl,
-        };
-      });
+        }));
 
-      setPhotos(urls);
-    } catch (err) {
-      console.error("Error fetching photos:", err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+        setPhotos(urls);
+      } catch (err) {
+        console.error("Error fetching photos:", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  useEffect(() => {
     fetchPhotos();
   }, []);
 
@@ -44,31 +38,21 @@ export default function Home() {
 
   return (
     <>
-      {/* PHOTO GRID */}
-      
-          <div className="p-2 columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-3">
-            {photos.map((photo) => (
-              <img
-                key={photo.name}
-                src={photo.url}
-                alt={photo.name}
-                onClick={() => setActivePhoto(photo.url)}
-                className="
-                mb-3
-                w-full
-                rounded-md
-                object-cover
-                break-inside-avoid
-                cursor-zoom-in
-                transition-transform
-                duration-300
-                hover:scale-[1.02]
-              "
-                style={{ maxHeight: "300px" }}
-              />
-            ))}
-          </div>
-        
+      <div className="max-w-6xl mx-auto px-4 py-6">
+        {/* GRID */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-center">
+          {photos.map((photo) => (
+            <img
+              key={photo.name}
+              src={photo.url}
+              alt={photo.name}
+              onClick={() => setActivePhoto(photo.url)}
+              className="w-full rounded-md object-cover cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+              style={{ maxHeight: "300px" }}
+            />
+          ))}
+        </div>
+      </div>
 
       {/* FULLSCREEN MODAL */}
       {activePhoto && (

@@ -1,3 +1,4 @@
+// src/App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -7,10 +8,8 @@ function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-white">
-        {/* SINGLE CENTERED CONTAINER */}
         <div className="max-w-6xl mx-auto px-4">
           <Header />
-
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/upload" element={<Upload />} />
