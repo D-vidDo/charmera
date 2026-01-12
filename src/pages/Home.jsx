@@ -41,18 +41,48 @@ export default function Home() {
     return <p className="text-center mt-10">No photos yet. Upload one!</p>;
 
   return (
-    <div className="p-2 columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-2">
-  {photos.map((photo) => (
-    <img
-      key={photo.name}
-      src={photo.url}
-      alt={photo.name}
-      className="mb-2 w-full rounded-md object-cover break-inside"
-      style={{ maxHeight: '300px' }} // scale down high-res photos
-    />
-  ))}
-</div>
+    <>
+      {/* PHOTO GRID */}
+      <div className="flex justify-center">
+        <div className="w-full max-w-6xl">
+          <div className="p-2 columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-3">
+            {photos.map((photo) => (
+              <img
+                key={photo.name}
+                src={photo.url}
+                alt={photo.name}
+                onClick={() => setActivePhoto(photo.url)}
+                className="
+                mb-3
+                w-full
+                rounded-md
+                object-cover
+                break-inside-avoid
+                cursor-zoom-in
+                transition-transform
+                duration-300
+                hover:scale-[1.02]
+              "
+                style={{ maxHeight: "300px" }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
 
-
+      {/* FULLSCREEN MODAL */}
+      {activePhoto && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center cursor-zoom-out"
+          onClick={() => setActivePhoto(null)}
+        >
+          <img
+            src={activePhoto}
+            alt="Expanded"
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
+      )}
+    </>
   );
 }
