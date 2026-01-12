@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import React, { useEffect, useState } from "react";
 import { supabase } from "../supabase";
 
@@ -38,23 +37,23 @@ export default function Home() {
 
   return (
     <>
+      {/* Centered Grid Container */}
       <div className="max-w-6xl mx-auto px-4 py-6">
-        {/* GRID */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-center">
+        <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
           {photos.map((photo) => (
             <img
               key={photo.name}
               src={photo.url}
               alt={photo.name}
               onClick={() => setActivePhoto(photo.url)}
-              className="w-full rounded-md object-cover cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+              className="mb-4 w-full rounded-md cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
               style={{ maxHeight: "300px" }}
             />
           ))}
         </div>
       </div>
 
-      {/* FULLSCREEN MODAL */}
+      {/* Fullscreen Modal */}
       {activePhoto && (
         <div
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center cursor-zoom-out"
