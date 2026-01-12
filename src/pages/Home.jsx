@@ -16,8 +16,7 @@ export default function Home() {
 
         const urls = data.map((file) => ({
           name: file.name,
-          url: supabase.storage.from("photos").getPublicUrl(file.name).data
-            .publicUrl,
+          url: supabase.storage.from("photos").getPublicUrl(file.name).data.publicUrl,
           uploadedBy: file.metadata?.uploadedBy || "Anonymous",
         }));
 
@@ -37,14 +36,10 @@ export default function Home() {
     return <p className="text-center mt-10">No photos yet. Upload one!</p>;
 
   return (
-    <div className="flex justify-center py-6">
-      <div className="w-full max-w-6xl px-2">
-        <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
-          {photos.map((photo) => (
-            <PhotoCard key={photo.name} photo={photo} />
-          ))}
-        </div>
-      </div>
+    <div className="flex flex-wrap justify-center gap-4 py-6">
+      {photos.map((photo) => (
+        <PhotoCard key={photo.name} photo={photo} />
+      ))}
     </div>
   );
 }
