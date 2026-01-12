@@ -5,6 +5,9 @@ import Upload from './pages/Upload'
 
 function App() {
   return (
+    <div>
+      <h1>Hello, Charmera!</h1>
+    </div>
     <BrowserRouter>
       <nav className="p-4 flex justify-between">
         <Link to="/">Home</Link>
