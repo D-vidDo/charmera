@@ -26,15 +26,15 @@ export default function PhotoCard({ photo }) {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="bg-black/95 p-4 flex flex-col items-center justify-center max-w-sm w-full mx-auto rounded-lg relative">
-        {/* Slightly bigger version */}
+      <DialogContent className="bg-black/95 p-4 flex flex-col items-center justify-center rounded-lg w-[95vw] max-w-[500px] max-h-[90vh] mx-auto overflow-auto relative">
+        {/* Image */}
         <img
           src={photo.url}
           alt={photo.name}
-          className="w-full max-w-md object-contain rounded-md mb-4"
+          className="w-full max-w-full max-h-[70vh] object-contain rounded-md mb-4"
         />
 
-        {/* Uploader name */}
+        {/* Uploader */}
         {photo.name && (
           <p className="text-white text-center font-semibold tracking-wide">
             sent by: {photo.name}
