@@ -35,7 +35,7 @@ export default function PhotoCard({ photo }) {
         {/* Overlay: full-screen bg + true centering */}
         <DialogOverlay 
           className={cn(
-            "fixed inset-0 z-50 bg-black/95", // your dark bg
+            "fixed inset-0 z-50 bg-black/40 backdrop-blur-sm", // your dark bg
             "flex items-center justify-center p-4" // centers + padding for edges
           )} 
         />

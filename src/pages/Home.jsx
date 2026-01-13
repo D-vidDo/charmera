@@ -55,7 +55,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen py-8 px-4 bg-black text-white">
+    <div className="min-h-screen py-8 px-4 text-white">
       {/* Zoom Controls – transparent buttons + indicators */}
       <div className="flex flex-col items-center gap-3 mb-10">
         <div className="flex items-center gap-8">
