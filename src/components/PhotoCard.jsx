@@ -4,13 +4,15 @@ import {
   DialogTrigger,
   DialogContent,
   DialogClose,
+  DialogOverlay,   // ← Import this if not already (from "@/components/ui/dialog")
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";  // assuming you have this for class merging
 
 export default function PhotoCard({ photo }) {
   return (
     <Dialog>
-      {/* Thumbnail trigger */}
+      {/* Thumbnail trigger – unchanged */}
       <DialogTrigger asChild>
         <div className="mb-4 rounded-md overflow-hidden relative group cursor-zoom-in border border-gray-300 hover:border-black transition-colors">
           <img
@@ -21,23 +23,33 @@ export default function PhotoCard({ photo }) {
         </div>
       </DialogTrigger>
 
-      {/* Modal content – centered via flex on the container */}
+      {/* Modal – we customize via classes on Overlay + Content */}
       <DialogContent 
-        className="
-          fixed inset-0 z-50 
-          flex items-center justify-center 
-          bg-black/95 p-4
-          overflow-hidden"  // inset-0 + flex centers reliably
+        className={cn(
+          // Remove heavy overrides – let Radix position it
+          // But override bg + padding if needed
+          "bg-transparent border-none shadow-none p-0 sm:max-w-md", // transparent so overlay bg shows through
+          // Keep your max sizes but let inner div handle scroll
+        )}
       >
-        {/* Inner wrapper for sizing + scroll if needed */}
-        <div className="
-          relative 
-          w-[95vw] sm:max-w-md 
-          max-h-[90vh] overflow-auto 
-          rounded-lg bg-black/80 border border-white/10
-          shadow-2xl
-        ">
-          {/* Slightly larger preview */}
+        {/* Overlay: full-screen bg + true centering */}
+        <DialogOverlay 
+          className={cn(
+            "fixed inset-0 z-50 bg-black/95", // your dark bg
+            "flex items-center justify-center p-4" // centers + padding for edges
+          )} 
+        />
+
+        {/* Inner centered content wrapper */}
+        <div 
+          className="
+            relative z-50 
+            w-[95vw] sm:max-w-md 
+            max-h-[90vh] overflow-auto 
+            rounded-lg bg-black/80 border border-white/10 shadow-2xl
+          "
+        >
+          {/* Image preview */}
           <img
             src={photo.url}
             alt={photo.name}
