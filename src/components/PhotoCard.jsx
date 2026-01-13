@@ -26,27 +26,31 @@ export default function PhotoCard({ photo }) {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="bg-black/90 p-4 flex flex-col items-center justify-center max-w-full max-h-full relative">
-        {/* Full-size photo */}
+      <DialogContent className="bg-black/95 p-4 flex flex-col items-center justify-center max-w-sm w-full mx-auto rounded-lg relative">
+        {/* Slightly bigger version */}
         <img
           src={photo.url}
           alt={photo.name}
-          className="max-w-full max-h-[80vh] object-contain rounded-md"
+          className="w-full max-w-md object-contain rounded-md mb-4"
         />
 
         {/* Uploader name */}
         {photo.name && (
-          <p className="text-white mt-3 text-sm tracking-wide">
+          <p className="text-white text-center font-semibold tracking-wide">
             sent by: {photo.name}
           </p>
         )}
+
+        {/* Description */}
         {photo.description && (
-          <p className="text-white mt-1 text-sm italic">{photo.description}</p>
+          <p className="text-white text-center italic text-sm mt-1">
+            {photo.description}
+          </p>
         )}
 
         {/* Close button */}
         <DialogClose asChild>
-          <Button className="absolute top-4 right-4 bg-white text-black rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-200">
+          <Button className="absolute top-3 right-3 bg-white text-black rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-200">
             &times;
           </Button>
         </DialogClose>
