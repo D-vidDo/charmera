@@ -60,7 +60,7 @@ export default function PhotoCard({ photo }) {
           <div className="p-4 text-center">
             {photo.name && (
               <p className="text-white font-semibold tracking-wide">
-                sent by: {photo.name}
+                sent by {photo.name}
               </p>
             )}
             {photo.description && (
