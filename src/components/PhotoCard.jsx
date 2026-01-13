@@ -10,38 +10,32 @@ import { Button } from "@/components/ui/button";
 export default function PhotoCard({ photo }) {
   return (
     <Dialog>
+      {/* Thumbnail trigger */}
       <DialogTrigger asChild>
-        <div className="mb-4 rounded-md overflow-hidden relative group cursor-zoom-in">
+        <div className="mb-4 rounded-md overflow-hidden relative group cursor-zoom-in border border-gray-300 hover:border-black transition-colors">
           <img
             src={photo.url}
             alt={photo.name}
-            className="transition-transform duration-300 group-hover:scale-105 rounded-md"
-            style={{
-              maxWidth: "300px",
-              maxHeight: "300px",
-              width: "auto",
-              height: "auto",
-            }}
+            className="w-full h-auto max-w-[300px] max-h-[300px] object-cover rounded-md transition-transform duration-300 group-hover:scale-105"
           />
         </div>
       </DialogTrigger>
 
-      <DialogContent className="bg-black/95 p-4 flex flex-col items-center justify-center rounded-lg w-[95vw] max-w-[500px] max-h-[90vh] mx-auto overflow-auto relative">
-        {/* Image */}
+      {/* Modal content */}
+      <DialogContent className="bg-black/95 p-4 flex flex-col items-center justify-center rounded-lg w-full sm:max-w-md max-h-[90vh] mx-auto overflow-auto relative">
+        {/* Slightly larger preview */}
         <img
           src={photo.url}
           alt={photo.name}
-          className="w-full max-w-full max-h-[70vh] object-contain rounded-md mb-4"
+          className="w-full max-h-[70vh] object-contain rounded-md mb-4 border border-white/20"
         />
 
-        {/* Uploader */}
+        {/* Metadata */}
         {photo.name && (
           <p className="text-white text-center font-semibold tracking-wide">
             sent by: {photo.name}
           </p>
         )}
-
-        {/* Description */}
         {photo.description && (
           <p className="text-white text-center italic text-sm mt-1">
             {photo.description}
