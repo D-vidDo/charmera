@@ -155,7 +155,7 @@ export default function Home() {
       </div>
       {/* Footer */}
       <footer className="mt-10 md:mt-12 py-4 text-center text-[10px] leading-tight text-gray-500">
-        made with love<3
+        {"made with love <3"}
       </footer>
     </div>
   );
