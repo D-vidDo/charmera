@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Upload from "./pages/Upload";
+import { Analytics } from "@vercel/analytics/react"
+
 
 // Reusable variants (same as yours)
 const pageVariants = {
@@ -19,6 +21,7 @@ const pageTransition = {
 function App() {
   return (
     <BrowserRouter>
+    <Analytics/>
       <div className="flex flex-col items-center min-h-screen w-full">
         <div className="w-full max-w-6xl px-4">
           <Header />
