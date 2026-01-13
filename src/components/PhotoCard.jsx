@@ -22,7 +22,10 @@ export default function PhotoCard({ photo }) {
       </DialogTrigger>
 
       {/* Modal content */}
-      <DialogContent className="bg-black/95 p-4 flex flex-col items-center justify-center rounded-lg w-full sm:max-w-md max-h-[90vh] mx-auto overflow-auto relative">
+      <DialogContent className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        bg-black/95 p-4 flex flex-col items-center justify-center
+        rounded-lg w-[95vw] sm:max-w-md max-h-[90vh] overflow-auto relative">
+
         {/* Slightly larger preview */}
         <img
           src={photo.url}
