@@ -26,11 +26,34 @@ export default function Home() {
     };
 
     fetchPhotos();
+
+    // Realtime subscription for new photos
+    const subscription = supabase
+      .channel("photos-updates")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "photos_metadata" },
+        (payload) => {
+          // Prepend the new photo to the list
+          setPhotos((prev) => [payload.new, ...prev]);
+        }
+      )
+      .subscribe();
+
+    // Cleanup on unmount
+    return () => {
+      supabase.removeChannel(subscription);
+    };
   }, []);
 
-  if (loading) return <p className="text-center mt-10 text-gray-600">loading charms...</p>;
+  if (loading)
+    return <p className="text-center mt-10 text-gray-600">loading charms...</p>;
   if (!photos.length)
-    return <p className="text-center mt-10 text-gray-600">no charms yet. send one!</p>;
+    return (
+      <p className="text-center mt-10 text-gray-600">
+        no charms yet. send one!
+      </p>
+    );
 
   const getGridClasses = () => {
     switch (zoomLevel) {
@@ -51,17 +74,25 @@ export default function Home() {
 
   const getCardMaxSize = () => {
     switch (zoomLevel) {
-      case 1: return "max-w-[140px] max-h-[140px]";
-      case 2: return "max-w-[180px] max-h-[180px]";
-      case 3: return "max-w-[360px] max-h-[360px]"; // your original default close
-      case 4: return "max-w-[480px] max-h-[480px]";
-      case 5: return "max-w-[640px] max-h-[640px]";
-      default: return "max-w-[260px] max-h-[260px]";
+      case 1:
+        return "max-w-[140px] max-h-[140px]";
+      case 2:
+        return "max-w-[180px] max-h-[180px]";
+      case 3:
+        return "max-w-[360px] max-h-[360px]"; // your original default close
+      case 4:
+        return "max-w-[480px] max-h-[480px]";
+      case 5:
+        return "max-w-[640px] max-h-[640px]";
+      default:
+        return "max-w-[260px] max-h-[260px]";
     }
   };
 
   return (
-    <div className="min-h-screen py-8 px-4 text-black"> {/* text-black for white bg visibility */}
+    <div className="min-h-screen py-8 px-4 text-black">
+      {" "}
+      {/* text-black for white bg visibility */}
       {/* Zoom Controls – transparent buttons + indicators */}
       <div className="flex flex-col items-center gap-3 mb-10">
         <div className="flex items-center gap-8">
@@ -111,7 +142,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-
       {/* Photo Grid */}
       <div className={`grid ${getGridClasses()} justify-items-center`}>
         {photos.map((photo) => (
