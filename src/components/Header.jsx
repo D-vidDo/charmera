@@ -4,7 +4,7 @@ import { Button } from "./ui/button"; // make sure the path matches your project
 import { useMemo } from "react";
 
 const heartPaths = [
-  // messy left-leaning
+  // messy left-leaningd
   `M14.5 19
    C11.2 16.2, 6.5 13.8, 6.3 10.4
    C6.1 8.1, 8.1 6.8, 9.7 7.6
