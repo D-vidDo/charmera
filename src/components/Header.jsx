@@ -32,11 +32,15 @@ const heartPaths = [
    C17 16.5, 16 17.8, 15 19.2`,
 ];
 
-const heartPath = useMemo(() => {
+
+
+export default function Header() {
+
+
+  const heartPath = useMemo(() => {
   return heartPaths[Math.floor(Math.random() * heartPaths.length)];
 }, []);
 
-export default function Header() {
   return (
     <header className="py-6 bg-white/80 backdrop-blur z-50 w-full">
       <div className="flex flex-col items-center space-y-3">
