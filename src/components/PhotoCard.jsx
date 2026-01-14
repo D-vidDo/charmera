@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils"; // assuming you have this for class merging
-import { heart } from "lucide-react";
+import { Heart } from "lucide-react";
 
 export default function PhotoCard({ photo }) {
   function getAnonId() {
