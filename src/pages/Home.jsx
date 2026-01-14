@@ -55,22 +55,23 @@ export default function Home() {
       </p>
     );
 
-  const getGridClasses = () => {
-    switch (zoomLevel) {
-      case 1: // very far out
-        return "grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-9 gap-2";
-      case 2: // far out
-        return "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-3";
-      case 3: // default close
-        return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6";
-      case 4: // closer
-        return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-8";
-      case 5: // very close / max zoom
-        return "grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10";
-      default:
-        return "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4";
-    }
-  };
+const getGridClasses = () => {
+  switch (zoomLevel) {
+    case 1:
+      return "grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-9 gap-0";
+    case 2:
+      return "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-0";
+    case 3:
+      return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-0";
+    case 4:
+      return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-0";
+    case 5:
+      return "grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-0";
+    default:
+      return "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-0";
+  }
+};
+
 
   const getCardMaxSize = () => {
     switch (zoomLevel) {
@@ -143,7 +144,7 @@ export default function Home() {
         </div>
       </div>
       {/* Photo Grid */}
-      <div className={`grid ${getGridClasses()} justify-items-center`}>
+      <div className={`grid ${getGridClasses()} `}>
         {photos.map((photo) => (
           <div
             key={photo.id}
