@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils"; // assuming you have this for class merging
 import { Heart } from "lucide-react";
+import { supabase } from "../supabase"
 
 export default function PhotoCard({ photo }) {
   function getAnonId() {
