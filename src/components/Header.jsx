@@ -50,9 +50,8 @@ export default function Header() {
     <header className="py-6 bg-white/80 backdrop-blur z-50 w-full">
       <div className="flex flex-col items-center space-y-3">
         <h1 className="text-4xl font-serif text-black">
-          <span className="inline-flex items-start gap-1">
+          <span className="inline-flex items-center justify-center">
             <span>charmera</span>
-
             <svg
               width="20"
               height="20"
@@ -62,7 +61,7 @@ export default function Header() {
               strokeWidth="1.9"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="-rotate-18 scale-x-[-1] translate-y-[-4px]"
+              className="-rotate-18 scale-x-[-1] translate-y-[-4px] ml-[-2px]" // tweak ml to center
             >
               <path d={heartPath} />
             </svg>
