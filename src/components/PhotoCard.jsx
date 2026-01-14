@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils"; // assuming you have this for class merging
 import { Heart } from "lucide-react";
-import { supabase } from "../supabase"
+import { supabase } from "../supabase";
 
 export default function PhotoCard({ photo }) {
   function getAnonId() {
@@ -21,47 +21,69 @@ export default function PhotoCard({ photo }) {
     return id;
   }
 
-  const [likes, setLikes] = useState(photo.likes ?? 0);
+  const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
+
+  const fetchLikes = async () => {
+    const { count } = await supabase
+      .from("photo_likes")
+      .select("*", { count: "exact", head: true })
+      .eq("photo_id", photo.id);
+    setLikes(count || 0);
+  };
+
+  useEffect(() => {
+    fetchLikes();
+  }, [photo.id]);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel(`photo-likes-${photo.id}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "photo_likes",
+          filter: `photo_id=eq.${photo.id}`,
+        },
+        fetchLikes
+      )
+      .subscribe();
+
+    return () => supabase.removeChannel(channel);
+  }, [photo.id]);
 
   useEffect(() => {
     const checkLiked = async () => {
       const anonId = getAnonId();
-
       const { data } = await supabase
         .from("photo_likes")
         .select("id")
         .eq("photo_id", photo.id)
         .eq("anon_id", anonId)
         .maybeSingle();
-
       if (data) setLiked(true);
     };
-
     checkLiked();
   }, [photo.id]);
 
   const handleLike = async (e) => {
-    e.stopPropagation(); // prevent opening modal
-
+    e.stopPropagation();
     if (liked) return;
-
     const anonId = getAnonId();
+    setLikes((l) => l + 1);
+    setLiked(true);
 
     const { error } = await supabase.from("photo_likes").insert({
       photo_id: photo.id,
       anon_id: anonId,
     });
 
-    if (error) return;
-
-    await supabase
-      .from("photos_metadata")
-      .update({ likes: likes + 1 })
-      .eq("id", photo.id);
-
-    setLikes((l) => l + 1);
-    setLiked(true);
+    if (error) {
+      setLikes((l) => l - 1);
+      setLiked(false);
+    }
   };
 
   return (
